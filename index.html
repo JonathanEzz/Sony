@@ -5,6 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PlayStation</title>
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBbNVFNN9CoFUf4DrCJsOXHxnc2KpnEW58",
+      authDomain: "sony-33aa4.firebaseapp.com",
+      projectId: "sony-33aa4",
+      storageBucket: "sony-33aa4.firebasestorage.app",
+      messagingSenderId: "609062779229",
+      appId: "1:609062779229:web:1a7910e911ecb4edefd0b4"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Función para crear cuenta
+    const registerForm = document.getElementById('register');
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('emailCreate').value;
+      const password = document.getElementById('passwordCreate').value;
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          alert("Cuenta creada con éxito");
+          console.log('Usuario creado:', user);
+        })
+        .catch((error) => {
+          alert("Error al crear cuenta: " + error.message);
+          console.error(error);
+        });
+    });
+
+    // Función para iniciar sesión
+    const loginForm = document.getElementById('login');
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          alert("Inicio de sesión exitoso");
+          console.log('Usuario autenticado:', user);
+        })
+        .catch((error) => {
+          alert("Error al iniciar sesión: " + error.message);
+          console.error(error);
+        });
+    });
+  </script>
 </head>
 <body>
   <!-- Contenedor de inicio de sesión -->
